@@ -31,6 +31,10 @@
 
 ---
 
+### メタプログラミングをやってみよう！
+
+---
+
 ## --- お題 ---
 ### Hash の添字アクセスを
 ### メソッド呼び出しにしよう
@@ -143,12 +147,10 @@ class Hash
 end
 
 homu = { id: 1, name: :homu, age: 14}
-
 # id や name というメソッドが存在しないので method_missing に委譲される
 pp homu.id       # => 1
 pp homu.name     # => :homu
 pp homu.age      # => 14
-
 homu.age = 15
 homu.category = "human"
 
@@ -158,7 +160,6 @@ pp homu
 
 ---
 
-### と、言う感じで
 ### このように動的に処理を行うことを
 ### メタプログラミングといいます
 
@@ -167,15 +168,26 @@ pp homu
 ### method_missing 以外にも
 - - -
 
-* const_missing
-* define_method
-* respond_to?
-* send, public_send
-* instance_exec, instance_eval
-* instance_variable_set, instance_variable_get
-* Class.new, Module.new
-* class_eval, module_eval
-* etc...
+* const_missing                <!-- .element: class="fragment" -->
+* define_method             <!-- .element: class="fragment" -->
+* respond_to?             <!-- .element: class="fragment" -->
+* send, public_send             <!-- .element: class="fragment" -->
+* instance_exec, instance_eval             <!-- .element: class="fragment" -->
+* instance_variable_set, instance_variable_get             <!-- .element: class="fragment" -->
+* Class.new, Module.new             <!-- .element: class="fragment" -->
+* class_eval, module_eval             <!-- .element: class="fragment" -->
+* etc...             <!-- .element: class="fragment" -->
+
+
+---
+
+#### まとめ1
+- - -
+
+* Ruby では動的にメソッドを定義したり呼び出したり書き換えたりすることをメタプログラミングという            <!-- .element: class="fragment" -->
+* method_missing はかなり強力な反面、意図しない動作を引き起こしてしまう可能性もある            <!-- .element: class="fragment" -->
+* 使用する場合は用法用量を守って正しく使う必要がある           <!-- .element: class="fragment" -->
+* メタプログラミングは楽しい           <!-- .element: class="fragment" -->
 
 ---
 
@@ -275,11 +287,11 @@ pp homu.name
 
 ---
 
-## 答え
+# 答え
 
 ---
 
-## Refinements は method_missing 
+## Refinements は method_missing
 ## に対応してないから！！！！
 
 ---
@@ -287,22 +299,25 @@ pp homu.name
 ## SAD STORY
 - - -
 
-* Refinements で method_missing を定義しても反映されない
-* これは Ruby の言語仕様がそうなっているから
-* [#15374](https://bugs.ruby-lang.org/issues/15374) で method_missing が反映されるように提案した
-* しかし、残念ながら Reject されてしまった… 😇
+* Refinements で method_missing を定義しても反映されない             <!-- .element: class="fragment" -->
+* これは Ruby の言語仕様がそうなっているから           <!-- .element: class="fragment" -->
+* Ruby 本体に method_missing が反映されるように提案した             <!-- .element: class="fragment" -->
+  *  [#15374](https://bugs.ruby-lang.org/issues/15374)
+* しかし、残念ながら Reject されてしまった… 😇           <!-- .element: class="fragment" -->
 
 ---
 
-## そもそも…
+## そもそも経緯…
 
 ---
 
-* 昔々[同様の事を行う gem](https://github.com/osyo-manga/gem-hash_with_key_access_method) をつくっていた
-* メタプログラミングネタを探している時にこれの存在を思い出した
-* このスライドをつくりながら実装を見ていたら method_missing に対応しているようにみえた
-* README やテストも method_missing が呼び出されることを期待しているようになっていた
-* 🤔
+* メタプログラミングの話を聞きたいと言われた              <!-- .element: class="fragment" -->
+* 昔々、同様の事を行う gem をみつけた          <!-- .element: class="fragment" -->
+  * https://github.com/osyo-manga/gem-hash_with_key_access_method
+* 元々 Refinements で method_missing を呼び出すのは無理だと知ってた          <!-- .element: class="fragment" -->
+* このスライドをつくりながら実装を見ていたら method_missing に対応しているようにみえた          <!-- .element: class="fragment" -->
+* README やテストも method_missing が呼び出されることを期待しているようになっていた          <!-- .element: class="fragment" -->
+* どういうこと？ 🤔          <!-- .element: class="fragment" -->
 
 ---
 
@@ -316,16 +331,15 @@ pp homu.name
 
 ---
 
-## つまり Ruby 2.2 から 2.3 で非互換な変更があった
-## 流石に Ruby 2.2 は古すぎるやろ…
+## つまり
+## Ruby 2.2 から 2.3 で非互換な変更があった              <!-- .element: class="fragment" -->
+## 流石に Ruby 2.2 は古すぎるやろ…              <!-- .element: class="fragment" -->
 
 ---
 
-#### まとめ
+#### まとめ2
 - - -
 
-* Ruby のメタプログラミングはとても強力、メタプログラミング楽しい
-* ただし、用法用量を守って正しく使わないと思わぬ副作用があるので注意
 * Refinements 無限につれえ
 
 ---
