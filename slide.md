@@ -337,10 +337,9 @@ pp homu.name
 
 ---
 
-#### まとめ2
 - - -
 
-* Refinements 無限につれえ
+## Refinements 無限につれえ              <!-- .element: class="fragment" -->
 
 ---
 
